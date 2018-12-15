@@ -1,4 +1,4 @@
-#user-event {
+#user-event, #wins {
     color: blue;
     font-weight:bold;
     width:100%;
@@ -7,8 +7,7 @@
     text-align:center;
 }
 
-#guess-word, #available-letters, #guessed-letters {
-    letter-spacing: .5rem;
+#guess-word, #available-letters, #guessed-letters, #guesses-left {
     width:100%;
     margin:auto;
     text-align:center;
@@ -16,4 +15,9 @@
 
 #guess-word {
     font-size: 24px;
+    letter-spacing: .5rem;
+}
+
+#available-letters, #guessed-letters {
+    letter-spacing: .15rem;
 }

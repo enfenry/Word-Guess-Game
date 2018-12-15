@@ -1,12 +1,30 @@
 // Generate random word
+
+let animals = [
+    "Aardvark", "Albatross", "Alligator", "Alpaca", "Ant", "Anteater", "Antelope", "Ape", "Armadillo", "Donkey", "Baboon", "Badger", "Barracuda", "Bat", "Bear", "Beaver", "Bee", "Bison", "Boar", "Buffalo", "Butterfly", "Camel", "Capybara", "Caribou", "Cat", "Caterpillar", "Cheetah", "Chicken", "Chimpanzee", "Chinchilla", "Clam", "Cobra", "Cockroach", "Cod", "Coyote", "Crab", "Crane", "Crocodile", "Crow", "Deer", "Dinosaur", "Dog", "Dogfish", "Dolphin", "Dove", "Dragonfly", "Duck", "Dugong", "Eagle", "Echidna", "Eel", "Elephant", "Elk", "Emu", "Falcon", "Ferret", "Finch", "Fish", "Flamingo", "Fly", "Fox", "Frog", "Gazelle", "Gerbil", "Giraffe", "Gnat", "Goat", "Goldfish", "Goose", "Gorilla", "Grasshopper", "Grouse", "Guanaco", "Gull", "Hamster", "Hare", "Hawk", "Hedgehog", "Heron", "Herring", "Hippopotamus", "Hornet", "Horse", "Human", "Hummingbird", "Hyena", "Ibex", "Ibis", "Jackal", "Jaguar", "Jellyfish", "Kangaroo", "Kingfisher", "Koala", "Lark", "Lemur", "Leopard", "Lion", "Llama", "Lobster", "Locust", "Louse", "Mallard", "Manatee", "Mandrill", "Mantis", "Meerkat", "Mink", "Mole", "Mongoose", "Monkey", "Moose", "Mosquito", "Mouse", "Mule", "Narwhal", "Newt", "Nightingale", "Octopus", "Okapi", "Opossum", "Ostrich", "Otter", "Owl", "Oyster", "Panther", "Parrot", "Pelican", "Penguin", "Pheasant", "Pig", "Pigeon", "Pony", "Porcupine", "Porpoise", "Quail", "Rabbit", "Raccoon", "Ram", "Rat", "Raven", "Reindeer", "Rhinoceros", "Rook", "Salamander", "Salmon", "Sand Dollar", "Sandpiper", "Sardine", "Scorpion", "Seahorse", "Seal", "Shark", "Sheep", "Shrew", "Skunk", "Snail", "Snake", "Sparrow", "Spider", "Squid", "Squirrel", "Starling", "Stingray", "Stinkbug", "Stork", "Swallow", "Swan", "Tapir", "Termite", "Tiger", "Toad", "Trout", "Turkey", "Turtle", "Viper", "Vulture", "Wallaby", "Walrus", "Wasp", "Weasel", "Whale", "Wildcat", "Wolf", "Wolverine", "Wombat", "Woodcock", "Woodpecker", "Worm", "Wren", "Yak", "Zebra"
+]
+
+
+
+
 // FOR NOW just using default word
 let wordToGuess = 'hangman'
+
+
+
+
+
 
 let availableLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 let guessedLetters = [];
 
+let wins = 0;
+let divWins = document.getElementById("wins");
+divWins.textContent = "Wins: " + wins;
+
+
 let divAvailable = document.getElementById("available-letters");
-divAvailable.textContent = "Available Letters: " + availableLetters;
+divAvailable.textContent = "Available letters: " + availableLetters;
 
 let divGuessed = document.getElementById("guessed-letters");
 divGuessed.textContent = "Letters already guessed: "
@@ -17,30 +35,64 @@ divWordShown.textContent = wordInBlanks;
 
 let divUserChoice = document.getElementById("user-event");
 
+let divGuessesLeft = document.getElementById("guesses-left");
+let guessesLeft = 7;
+divGuessesLeft.textContent = "Incorrect guesses left: " + guessesLeft;
 
 // Get Key input from player
 document.onkeyup = function (event) {
     let chosenLetter = event.key.toUpperCase();
+
+
+    // initialize correctGuess variable as false, will check if it's true.
+    let correctGuess = false;
+
     // accept Player's Key Input ONLY if input is a letter
-    if (availableLetters.indexOf(chosenLetter) !== -1) {
+    if (availableLetters.indexOf(chosenLetter) !== -1 && guessesLeft > 0) {
+
+        //Show letter guessed in divUserChoice
         divUserChoice.textContent = chosenLetter;
-        updateAvailableLetters(chosenLetter,availableLetters);
-        divAvailable.textContent = "Available Letters: " + availableLetters;
+
+        //Remove letter guessed from available letters to choose from
+        updateAvailableLetters(chosenLetter, availableLetters);
+        divAvailable.textContent = "Available letters: " + availableLetters;
+
+        // Add letter guessed to list of other guesses
         guessedLetters.push(chosenLetter);
         divGuessed.textContent = "Letters already guessed: " + guessedLetters;
 
+
+        // Fill in the blanks in the correct spaces
         for (let i = 0; i < wordToGuess.length; i++) {
             if (chosenLetter === wordToGuess.charAt(i).toUpperCase()) {
-                wordInBlanks = replaceAt(wordInBlanks,i,chosenLetter);
+                wordInBlanks = replaceAt(wordInBlanks, i, chosenLetter);
                 divWordShown.textContent = wordInBlanks;
+                correctGuess = true;
             }
         }
+        if (wordInBlanks === wordToGuess.toUpperCase()) {
+            wins += 1;
+            divWins.textContent = "Wins: " + wins;
+            divUserChoice.textContent = "YOU WIN! TYPE ANY KEY TO PLAY AGAIN.";
+        }
+
+        if (!correctGuess) {
+            // Countdown guesses left
+            guessesLeft -= 1;
+            divGuessesLeft.textContent = "Incorrect guesses left: " + guessesLeft;
+
+            if (guessesLeft === 0) {
+                divUserChoice.textContent = "GAME OVER. TYPE ANY KEY TO PLAY AGAIN.";
+            }
+        }
+    }
+    else if (guessesLeft != 0) {
+        divUserChoice.textContent = "Please guess one of the available letters.";
     }
 }
 
 
 // Display starting _ _ _ _ 's based on word length
-
 function initBlanks(string) {
     let blanks = "";
     for (let i = 0; i < string.length; i++) {
@@ -50,13 +102,13 @@ function initBlanks(string) {
 }
 
 // Remove used letter from available letters
-function updateAvailableLetters(letter,availableLetters) {
-    availableLetters.splice(availableLetters.indexOf(letter.toUpperCase()),1);
+function updateAvailableLetters(letter, availableLetters) {
+    availableLetters.splice(availableLetters.indexOf(letter.toUpperCase()), 1);
     return availableLetters;
 }
 
 // Replace character at given index
 function replaceAt(string, index, newChar) {
     return string.substring(0, index) + newChar + string.substring(index + 1);
-  }
+}
 
