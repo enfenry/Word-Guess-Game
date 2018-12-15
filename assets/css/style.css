@@ -7,10 +7,13 @@
     text-align:center;
 }
 
-#guess-word, #available-letters {
+#guess-word, #available-letters, #guessed-letters {
     letter-spacing: .5rem;
     width:100%;
     margin:auto;
-    font-size: 24px;
     text-align:center;
+}
+
+#guess-word {
+    font-size: 24px;
 }
