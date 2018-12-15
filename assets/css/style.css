@@ -1,4 +1,4 @@
-#user-event, #wins {
+#user-event, #wins, #losses, #w-l {
     color: blue;
     font-weight:bold;
     width:100%;
@@ -20,4 +20,8 @@
 
 #available-letters, #guessed-letters {
     letter-spacing: .15rem;
+}
+
+header {
+    text-align:center;
 }
