@@ -1,0 +1,16 @@
+#user-event {
+    color: blue;
+    font-weight:bold;
+    width:100%;
+    margin:auto;
+    font-size: 24px;
+    text-align:center;
+}
+
+#guess-word, #available-letters {
+    letter-spacing: .5rem;
+    width:100%;
+    margin:auto;
+    font-size: 24px;
+    text-align:center;
+}
