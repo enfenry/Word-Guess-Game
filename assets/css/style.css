@@ -1,5 +1,15 @@
-#user-event, #wins, #losses, #w-l {
-    color: blue;
+* {
+    line-height:32px;
+
+}
+
+body {
+    background-image: url("../images/animal1-small.png");
+    background-repeat: repeat;
+    box-sizing: border-box;
+}
+
+#user-event, #wins, #losses {
     font-weight:bold;
     width:100%;
     margin:auto;
@@ -7,15 +17,29 @@
     text-align:center;
 }
 
+#wins, #losses {
+    color: gold;
+}
+
 #guess-word, #available-letters, #guessed-letters, #guesses-left {
+    color: gold;
     width:100%;
     margin:auto;
     text-align:center;
 }
 
 #guess-word {
-    font-size: 24px;
+    font-size: 32px;
     letter-spacing: .5rem;
+    padding: 15px;
+}
+
+#user-event {
+    padding:15px;
+}
+
+#guesses-left {
+    font-size: 24px;
 }
 
 #available-letters, #guessed-letters {
@@ -24,4 +48,26 @@
 
 header {
     text-align:center;
+    background-color: brown;
+    color: gold;
+    width: 50%;
+    margin:auto;
+    border: solid;
+    border-width: 2px;
+    border-color: #94C4CA;
+    margin-bottom: 50px;
+    padding: 0px 20px 0px 20px;
+}
+
+main {
+    text-align:center;
+    background-color: brown;
+    color: white;
+    width: 50%;
+    height:70%;
+    margin:auto;
+    border: solid;
+    border-width: 2px;
+    border-color: #94C4CA;
+    padding: 20px;
 }

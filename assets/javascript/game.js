@@ -1,10 +1,11 @@
 let wins = 0;
 let losses = 0;
-let availableLetters, guessedLetters, guessesLeft, divUserChoice, divAvailable, divGuessed, divWins, divLosses, divWordShown, wordInBlanks, divGuessesLeft, wordToGuess, gameComplete;
+let availableLetters, guessedLetters, totalGuesses, guessesLeft, divMessage, divAvailable, divGuessed, divWins, divLosses, divWordShown, wordInBlanks, divGuessesLeft, wordToGuess, gameComplete;
 
 do {
-    guessesLeft = prompt("Select number of attempts (10 = easy, 7 = medium, 5 = hard)");
-} while (isNaN(guessesLeft));
+    totalGuesses = prompt("Select number of attempts (10 = easy, 7 = medium, 5 = hard)");
+    console.log(totalGuesses);
+} while (isNaN(totalGuesses));
 
 initRound();
 
@@ -21,17 +22,13 @@ document.onkeyup = function (event) {
     // accept Player's Key Input ONLY if input is a letter
     else if (availableLetters.indexOf(chosenLetter) !== -1 && guessesLeft > 0) {
 
-        //Show letter guessed in divUserChoice
-        divUserChoice.textContent = chosenLetter;
-
         //Remove letter guessed from available letters to choose from
         updateAvailableLetters(chosenLetter, availableLetters);
-        divAvailable.textContent = "Available letters: " + availableLetters;
+        divAvailable.textContent = availableLetters;
 
         // Add letter guessed to list of other guesses
         guessedLetters.push(chosenLetter);
-        divGuessed.textContent = "Letters already guessed: " + guessedLetters;
-
+        divGuessed.textContent = guessedLetters;
 
         // Fill in the blanks in the correct spaces
         for (let i = 0; i < wordToGuess.length; i++) {
@@ -43,29 +40,28 @@ document.onkeyup = function (event) {
         }
         if (wordInBlanks === wordToGuess.toUpperCase()) {
             wins += 1;
-            divWins.textContent = "Wins: " + wins;
-            divUserChoice.textContent = "YOU WIN! TYPE ANY KEY TO PLAY AGAIN.";
+            divWins.textContent = wins;
+            divMessage.textContent = "YOU WIN! TYPE ANY KEY TO PLAY AGAIN.";
             gameComplete = true;
         }
 
         if (!correctGuess) {
             // Countdown guesses left
             guessesLeft -= 1;
-            divGuessesLeft.textContent = "Incorrect guesses left: " + guessesLeft;
+            divGuessesLeft.textContent = guessesLeft;
 
             if (guessesLeft === 0) {
                 losses += 1;
-                divLosses.textContent = "Losses: " + losses;
-                divUserChoice.textContent = "GAME OVER. TYPE ANY KEY TO PLAY AGAIN.";
+                divLosses.textContent = losses;
+                divMessage.textContent = "GAME OVER. TYPE ANY KEY TO PLAY AGAIN.";
                 gameComplete = true;
             }
         }
     }
     else if (guessesLeft != 0) {
-        divUserChoice.textContent = "Please guess one of the available letters.";
+        divMessage.textContent = "Please guess one of the available letters.";
     }
 }
-
 
 // Start a new round
 function initRound() {
@@ -80,34 +76,33 @@ function initRound() {
 
     availableLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     guessedLetters = [];
+    guessesLeft = totalGuesses;
 
     // initialize gameComplete variable as false, will change/check if it's true later.
     gameComplete = false;
 
     divWins = document.getElementById("wins");
-    divWins.textContent = "Wins: " + wins;
+    divWins.textContent = wins;
 
     divLosses = document.getElementById("losses");
-    divLosses.textContent = "Losses: " + losses;
-
+    divLosses.textContent = losses;
 
     divAvailable = document.getElementById("available-letters");
-    divAvailable.textContent = "Available letters: " + availableLetters;
+    divAvailable.textContent = availableLetters;
 
     divGuessed = document.getElementById("guessed-letters");
-    divGuessed.textContent = "Letters already guessed: "
+    divGuessed.textContent = guessedLetters;
 
     divWordShown = document.getElementById("guess-word");
     wordInBlanks = initBlanks(wordToGuess)
     divWordShown.textContent = wordInBlanks;
 
-    divUserChoice = document.getElementById("user-event");
-    divUserChoice.textContent = "Press any key to get guessin'!";
+    divMessage = document.getElementById("user-event");
+    divMessage.textContent = "Press any key to get guessin'!";
 
     divGuessesLeft = document.getElementById("guesses-left");
-    divGuessesLeft.textContent = "Incorrect guesses left: " + guessesLeft;
+    divGuessesLeft.textContent = guessesLeft;
 }
-
 
 // Display starting _ _ _ _ 's based on word length
 function initBlanks(string) {
@@ -128,4 +123,3 @@ function updateAvailableLetters(letter, availableLetters) {
 function replaceAt(string, index, newChar) {
     return string.substring(0, index) + newChar + string.substring(index + 1);
 }
-
