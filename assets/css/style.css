@@ -11,10 +11,13 @@ body {
 
 #user-event, #wins, #losses {
     font-weight:bold;
-    width:100%;
     margin:auto;
     font-size: 24px;
     text-align:center;
+}
+
+#wins, #losses {
+    width:100%;
 }
 
 #wins, #losses {
@@ -23,9 +26,12 @@ body {
 
 #guess-word, #available-letters, #guessed-letters, #guesses-left {
     color: gold;
-    width:100%;
     margin:auto;
     text-align:center;
+}
+
+#available-letters, #guessed-letters, #guesses-left { 
+    width:100%;
 }
 
 #guess-word {
